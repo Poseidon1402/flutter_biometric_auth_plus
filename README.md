@@ -7,7 +7,7 @@ Advanced biometric authentication plugin for Flutter with comprehensive Android 
 
 ## 🎥 Demo
 
-https://github.com/user-attachments/assets/your-video-id-here
+https://github.com/Poseidon1402/flutter_biometric_auth_plus/blob/main/assets/demo.mp4
 
 > **Note:** Replace the URL above with your actual demo video URL from GitHub or YouTube
 
