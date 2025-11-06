@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Biometric Auth Plus Demo',
+      title: 'Biometric Auth Advanced Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -54,7 +54,7 @@ class BiometricAuthHomePage extends StatefulWidget {
 }
 
 class _BiometricAuthHomePageState extends State<BiometricAuthHomePage> with TickerProviderStateMixin {
-  final _biometricAuth = FlutterBiometricAuthPlus();
+  final _biometricAuth = BiometricAuthAdvanced();
 
   // Biometric capability states
   bool _hasHardware = false;

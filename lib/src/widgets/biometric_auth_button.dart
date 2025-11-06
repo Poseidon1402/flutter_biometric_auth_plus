@@ -4,7 +4,7 @@
 /// with built-in error handling and loading states.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 
 /// A customizable biometric authentication button widget
 class BiometricAuthButton extends StatefulWidget {
@@ -61,7 +61,7 @@ class BiometricAuthButton extends StatefulWidget {
 }
 
 class _BiometricAuthButtonState extends State<BiometricAuthButton> {
-  final _biometricAuth = FlutterBiometricAuthPlus();
+  final _biometricAuth = BiometricAuthAdvanced();
   bool _isLoading = false;
   bool _isAvailable = false;
 
@@ -194,4 +194,3 @@ class _BiometricAuthButtonState extends State<BiometricAuthButton> {
 ///   },
 /// )
 /// ```
-

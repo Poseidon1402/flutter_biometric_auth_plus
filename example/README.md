@@ -1,6 +1,6 @@
-# flutter_biometric_auth_plus_example
+# biometric_auth_advanced_example
 
-Demonstrates how to use the flutter_biometric_auth_plus plugin for advanced biometric authentication on Android.
+Demonstrates how to use the biometric_auth_advanced plugin for advanced biometric authentication on Android.
 
 ## Features Demonstrated
 
@@ -38,4 +38,4 @@ The example app shows:
 3. Three authentication method buttons
 4. Real-time authentication results
 
-For more information, see the [main plugin documentation](https://pub.dev/packages/flutter_biometric_auth_plus).
+For more information, see the [main plugin documentation](https://pub.dev/packages/biometric_auth_advanced).

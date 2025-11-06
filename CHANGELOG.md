@@ -39,4 +39,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proper activity lifecycle management
 - Memory leak prevention
 
-[1.0.0]: https://github.com/yourusername/flutter_biometric_auth_plus/releases/tag/v1.0.0
+[1.0.0]: https://github.com/Poseidon1402/biometric_auth_advanced/releases/tag/v1.0.0

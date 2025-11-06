@@ -1,15 +1,13 @@
-# flutter_biometric_auth_plus
+# biometric_auth_advanced
 
-[![pub package](https://img.shields.io/pub/v/flutter_biometric_auth_plus.svg)](https://pub.dev/packages/flutter_biometric_auth_plus)
+[![pub package](https://img.shields.io/pub/v/biometric_auth_advanced.svg)](https://pub.dev/packages/biometric_auth_advanced)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Advanced biometric authentication plugin for Flutter with comprehensive Android support including fingerprint, face recognition, iris scanning, and device credentials.
 
 ## 🎥 Demo
 
-https://github.com/Poseidon1402/flutter_biometric_auth_plus/blob/main/assets/demo.mp4
-
-> **Note:** Replace the URL above with your actual demo video URL from GitHub or YouTube
+![Demo](`assets/demo.gif`)
 
 ## ✨ Features
 
@@ -54,7 +52,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_biometric_auth_plus: ^1.0.0
+  biometric_auth_advanced: ^1.0.0
 ```
 
 Then run:
@@ -68,13 +66,13 @@ flutter pub get
 ### Import
 
 ```dart
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 ```
 
 ### Quick Start
 
 ```dart
-final biometricAuth = FlutterBiometricAuthPlus();
+final biometricAuth = BiometricAuthAdvanced();
 
 // Check if biometrics are available
 bool canAuthenticate = await biometricAuth.canAuthenticateWithBiometricsStrong();
@@ -196,7 +194,7 @@ try {
 ### Using the Reusable Widget
 
 ```dart
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 
 BiometricAuthButton(
   dialogTitle: 'Login Required',
@@ -343,7 +341,7 @@ class AppLockScreen extends StatelessWidget {
 
 ```dart
 Future<bool> confirmPayment(double amount) async {
-  final auth = FlutterBiometricAuthPlus();
+  final auth = BiometricAuthAdvanced();
   
   final result = await auth.authenticate(
     title: 'Confirm Payment',
@@ -361,7 +359,7 @@ Future<bool> confirmPayment(double amount) async {
 
 ```dart
 Future<void> openSecureSettings() async {
-  final auth = FlutterBiometricAuthPlus();
+  final auth = BiometricAuthAdvanced();
   
   final result = await auth.authenticate(
     title: 'Access Secure Settings',
@@ -429,7 +427,7 @@ Face recognition detection is based on device manufacturer and model. If your de
 
 ## 📊 Comparison with Other Plugins
 
-| Feature | flutter_biometric_auth_plus | local_auth | Other plugins |
+| Feature | biometric_auth_advanced | local_auth | Other plugins |
 |---------|---------------------------|------------|---------------|
 | BiometricPrompt API | ✅ Full support | ⚠️ Partial | ❌ Old API |
 | Strong/Weak Biometrics | ✅ Yes | ❌ No | ❌ No |
@@ -468,8 +466,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Support
 
-- **Issues:** [GitHub Issues](https://github.com/Poseidon1402/flutter_biometric_auth_plus/issues)
-- **Email:** rjls.tiavina@gmail.com
+- **Issues:** [GitHub Issues](https://github.com/Poseidon1402/biometric_auth_advanced/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/Poseidon1402/biometric_auth_advanced/discussions)
+- **Email:** your-email@example.com
 
 ## ⭐ Show Your Support
 

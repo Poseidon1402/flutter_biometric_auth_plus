@@ -1,4 +1,4 @@
-group = "mg.nexus.flutter_biometric_auth_plus"
+group = "com.nexus.biometric_auth_advanced"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "mg.nexus.flutter_biometric_auth_plus"
+    namespace = "com.nexus.biometric_auth_advanced"
 
     compileSdk = 36
 
