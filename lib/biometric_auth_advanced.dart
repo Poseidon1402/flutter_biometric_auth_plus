@@ -2,9 +2,9 @@
 ///
 /// This plugin provides comprehensive support for Android's BiometricPrompt API,
 /// including fingerprint, face, iris recognition, and device credential authentication.
-library flutter_biometric_auth_plus;
+library biometric_auth_advanced;
 
-import 'flutter_biometric_auth_plus_platform_interface.dart';
+import 'biometric_auth_advanced_platform_interface.dart';
 
 export 'src/models/biometric_auth_result.dart';
 export 'src/models/biometric_type.dart';
@@ -13,39 +13,39 @@ export 'src/models/authentication_options.dart';
 export 'src/widgets.dart';
 
 /// Main class for handling biometric authentication on Android devices
-class FlutterBiometricAuthPlus {
+class BiometricAuthAdvanced {
   /// Check if biometric hardware is available on the device
   Future<bool> canCheckBiometrics() {
-    return FlutterBiometricAuthPlusPlatform.instance.canCheckBiometrics();
+    return BiometricAuthAdvancedPlatform.instance.canCheckBiometrics();
   }
 
   /// Get list of available biometric types on the device
   /// Returns a list of [BiometricType] (fingerprint, face, iris)
   Future<List<String>> getAvailableBiometrics() {
-    return FlutterBiometricAuthPlusPlatform.instance.getAvailableBiometrics();
+    return BiometricAuthAdvancedPlatform.instance.getAvailableBiometrics();
   }
 
   /// Check if device has enrolled biometrics
   /// This checks if the user has registered at least one biometric
   Future<bool> hasEnrolledBiometrics() {
-    return FlutterBiometricAuthPlusPlatform.instance.hasEnrolledBiometrics();
+    return BiometricAuthAdvancedPlatform.instance.hasEnrolledBiometrics();
   }
 
   /// Check if device supports strong biometric authentication
   /// Strong biometrics: Fingerprint, Iris, Face (Class 3)
   Future<bool> canAuthenticateWithBiometricsStrong() {
-    return FlutterBiometricAuthPlusPlatform.instance.canAuthenticateWithBiometricsStrong();
+    return BiometricAuthAdvancedPlatform.instance.canAuthenticateWithBiometricsStrong();
   }
 
   /// Check if device supports weak biometric authentication
   /// Weak biometrics: Face, Iris (Class 2)
   Future<bool> canAuthenticateWithBiometricsWeak() {
-    return FlutterBiometricAuthPlusPlatform.instance.canAuthenticateWithBiometricsWeak();
+    return BiometricAuthAdvancedPlatform.instance.canAuthenticateWithBiometricsWeak();
   }
 
   /// Check if device credentials (PIN, Pattern, Password) are enrolled
   Future<bool> canAuthenticateWithDeviceCredential() {
-    return FlutterBiometricAuthPlusPlatform.instance.canAuthenticateWithDeviceCredential();
+    return BiometricAuthAdvancedPlatform.instance.canAuthenticateWithDeviceCredential();
   }
 
   /// Authenticate using biometrics or device credentials
@@ -69,7 +69,7 @@ class FlutterBiometricAuthPlus {
     bool allowDeviceCredential = false,
     String biometricStrength = 'strong',
   }) {
-    return FlutterBiometricAuthPlusPlatform.instance.authenticate(
+    return BiometricAuthAdvancedPlatform.instance.authenticate(
       title: title,
       subtitle: subtitle,
       description: description,
@@ -83,16 +83,16 @@ class FlutterBiometricAuthPlus {
   /// Get detailed information about device biometric capabilities
   /// Returns information about hardware, enrolled biometrics, and security level
   Future<Map<String, dynamic>> getBiometricInfo() {
-    return FlutterBiometricAuthPlusPlatform.instance.getBiometricInfo();
+    return BiometricAuthAdvancedPlatform.instance.getBiometricInfo();
   }
 
   /// Stop listening to authentication (cancel current authentication)
   Future<void> cancelAuthentication() {
-    return FlutterBiometricAuthPlusPlatform.instance.cancelAuthentication();
+    return BiometricAuthAdvancedPlatform.instance.cancelAuthentication();
   }
 
   @Deprecated('Use getBiometricInfo() instead')
   Future<String?> getPlatformVersion() {
-    return FlutterBiometricAuthPlusPlatform.instance.getPlatformVersion();
+    return BiometricAuthAdvancedPlatform.instance.getPlatformVersion();
   }
 }

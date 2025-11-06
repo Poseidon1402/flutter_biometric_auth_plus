@@ -1,24 +1,24 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'flutter_biometric_auth_plus_method_channel.dart';
+import 'biometric_auth_advanced_method_channel.dart';
 
-abstract class FlutterBiometricAuthPlusPlatform extends PlatformInterface {
-  /// Constructs a FlutterBiometricAuthPlusPlatform.
-  FlutterBiometricAuthPlusPlatform() : super(token: _token);
+abstract class BiometricAuthAdvancedPlatform extends PlatformInterface {
+  /// Constructs a BiometricAuthAdvancedPlatform.
+  BiometricAuthAdvancedPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static FlutterBiometricAuthPlusPlatform _instance = MethodChannelFlutterBiometricAuthPlus();
+  static BiometricAuthAdvancedPlatform _instance = MethodChannelBiometricAuthAdvanced();
 
-  /// The default instance of [FlutterBiometricAuthPlusPlatform] to use.
+  /// The default instance of [BiometricAuthAdvancedPlatform] to use.
   ///
-  /// Defaults to [MethodChannelFlutterBiometricAuthPlus].
-  static FlutterBiometricAuthPlusPlatform get instance => _instance;
+  /// Defaults to [MethodChannelBiometricAuthAdvanced].
+  static BiometricAuthAdvancedPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [FlutterBiometricAuthPlusPlatform] when
+  /// platform-specific class that extends [BiometricAuthAdvancedPlatform] when
   /// they register themselves.
-  static set instance(FlutterBiometricAuthPlusPlatform instance) {
+  static set instance(BiometricAuthAdvancedPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }

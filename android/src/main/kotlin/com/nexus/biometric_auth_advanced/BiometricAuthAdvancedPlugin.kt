@@ -1,4 +1,4 @@
-package mg.nexus.flutter_biometric_auth_plus
+package com.nexus.biometric_auth_advanced
 
 import android.content.Context
 import android.os.Build
@@ -17,7 +17,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import java.util.concurrent.Executor
 
 /**
- * FlutterBiometricAuthPlusPlugin
+ * BiometricAuthAdvancedPlugin
  *
  * Advanced Android biometric authentication plugin supporting:
  * - Fingerprint recognition
@@ -27,7 +27,7 @@ import java.util.concurrent.Executor
  * - Strong and Weak biometric authentication levels
  * - Modern BiometricPrompt API (Android 10+)
  */
-class FlutterBiometricAuthPlusPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class BiometricAuthAdvancedPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     // Channel for communication between Flutter and Android
     private lateinit var channel: MethodChannel
@@ -48,7 +48,7 @@ class FlutterBiometricAuthPlusPlugin : FlutterPlugin, MethodCallHandler, Activit
     private var currentPrompt: BiometricPrompt? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_biometric_auth_plus")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "biometric_auth_advanced")
         channel.setMethodCallHandler(this)
         context = flutterPluginBinding.applicationContext
         biometricManager = BiometricManager.from(context!!)

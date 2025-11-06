@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'flutter_biometric_auth_plus_platform_interface.dart';
+import 'biometric_auth_advanced_platform_interface.dart';
 
-/// An implementation of [FlutterBiometricAuthPlusPlatform] that uses method channels.
-class MethodChannelFlutterBiometricAuthPlus extends FlutterBiometricAuthPlusPlatform {
+/// An implementation of [BiometricAuthAdvancedPlatform] that uses method channels.
+class MethodChannelBiometricAuthAdvanced extends BiometricAuthAdvancedPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('flutter_biometric_auth_plus');
+  final methodChannel = const MethodChannel('biometric_auth_advanced');
 
   @override
   Future<String?> getPlatformVersion() async {
