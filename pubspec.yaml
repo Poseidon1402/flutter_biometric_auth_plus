@@ -1,9 +1,20 @@
 name: flutter_biometric_auth_plus
-description: Advanced Android biometric authentication plugin with full support for fingerprint, face, iris recognition, and device credentials. Implements modern BiometricPrompt API with strong/weak biometric levels.
+description: Advanced biometric authentication plugin with comprehensive Android support including fingerprint, face recognition, iris scanning, and device credentials using modern BiometricPrompt API.
 version: 1.0.0
 homepage: https://github.com/yourusername/flutter_biometric_auth_plus
 repository: https://github.com/yourusername/flutter_biometric_auth_plus
 issue_tracker: https://github.com/yourusername/flutter_biometric_auth_plus/issues
+
+topics:
+  - biometric
+  - authentication
+  - fingerprint
+  - face-recognition
+  - security
+
+screenshots:
+  - description: 'Biometric authentication example'
+    path: screenshots/demo.png
 
 environment:
   sdk: ^3.9.2

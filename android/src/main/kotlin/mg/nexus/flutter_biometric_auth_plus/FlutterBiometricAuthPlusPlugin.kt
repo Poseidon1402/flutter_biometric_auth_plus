@@ -108,24 +108,84 @@ class FlutterBiometricAuthPlusPlugin : FlutterPlugin, MethodCallHandler, Activit
 
     /**
      * Get list of available biometric types on the device
+     *
+     * Note: Android's BiometricManager API doesn't provide a direct way to query
+     * specific biometric types. This method uses heuristics and device characteristics
+     * to determine likely available biometric types.
      */
     private fun handleGetAvailableBiometrics(result: Result) {
         try {
             val availableBiometrics = mutableListOf<String>()
 
-            // Check for fingerprint
-            if (hasFingerprint()) {
-                availableBiometrics.add("fingerprint")
-            }
+            // Check if any biometric is enrolled
+            val canAuthenticateStrong = biometricManager?.canAuthenticate(BIOMETRIC_STRONG)
+            val canAuthenticateWeak = biometricManager?.canAuthenticate(BIOMETRIC_WEAK)
 
-            // Check for face recognition
-            if (hasFaceRecognition()) {
-                availableBiometrics.add("face")
-            }
+            if (canAuthenticateStrong == BiometricManager.BIOMETRIC_SUCCESS ||
+                canAuthenticateWeak == BiometricManager.BIOMETRIC_SUCCESS) {
 
-            // Check for iris recognition
-            if (hasIrisRecognition()) {
-                availableBiometrics.add("iris")
+                // Most Android devices have fingerprint sensors if they support strong biometrics
+                if (canAuthenticateStrong == BiometricManager.BIOMETRIC_SUCCESS) {
+                    availableBiometrics.add("fingerprint")
+                }
+
+                // Face recognition is typically available on devices with weak biometrics
+                // or newer devices with strong face authentication
+                // We can check device manufacturer and model for better accuracy
+                val manufacturer = Build.MANUFACTURER.lowercase()
+                val model = Build.MODEL.lowercase()
+
+                // Known devices with face unlock
+                val hasFaceUnlock = when {
+                    // Google Pixel devices with face unlock (Pixel 4 and later have strong face auth)
+                    manufacturer.contains("google") && (
+                        model.contains("pixel 4") ||
+                        model.contains("pixel 5") ||
+                        model.contains("pixel 6") ||
+                        model.contains("pixel 7") ||
+                        model.contains("pixel 8")
+                    ) -> true
+
+                    // Samsung devices often have face unlock
+                    manufacturer.contains("samsung") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> true
+
+                    // OnePlus devices
+                    manufacturer.contains("oneplus") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> true
+
+                    // Xiaomi/Redmi devices
+                    (manufacturer.contains("xiaomi") || manufacturer.contains("redmi")) &&
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> true
+
+                    // Oppo devices
+                    manufacturer.contains("oppo") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> true
+
+                    // Huawei devices
+                    manufacturer.contains("huawei") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> true
+
+                    // If device supports weak biometrics but not strong, it likely has face unlock
+                    canAuthenticateWeak == BiometricManager.BIOMETRIC_SUCCESS &&
+                        canAuthenticateStrong != BiometricManager.BIOMETRIC_SUCCESS -> true
+
+                    else -> false
+                }
+
+                if (hasFaceUnlock) {
+                    availableBiometrics.add("face")
+                }
+
+                // Iris recognition is very rare, primarily on Samsung Galaxy S8/S9/Note 8/Note 9
+                val hasIris = manufacturer.contains("samsung") && (
+                    model.contains("sm-g950") ||  // Galaxy S8
+                    model.contains("sm-g955") ||  // Galaxy S8+
+                    model.contains("sm-g960") ||  // Galaxy S9
+                    model.contains("sm-g965") ||  // Galaxy S9+
+                    model.contains("sm-n950") ||  // Galaxy Note 8
+                    model.contains("sm-n960")     // Galaxy Note 9
+                )
+
+                if (hasIris) {
+                    availableBiometrics.add("iris")
+                }
             }
 
             result.success(availableBiometrics)
@@ -343,28 +403,55 @@ class FlutterBiometricAuthPlusPlugin : FlutterPlugin, MethodCallHandler, Activit
 
     /**
      * Helper: Check if fingerprint is available
+     * Fingerprint is the most common biometric on Android devices
      */
     private fun hasFingerprint(): Boolean {
-        return biometricManager?.canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS ||
-               biometricManager?.canAuthenticate(BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS
+        return biometricManager?.canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     /**
      * Helper: Check if face recognition is available
+     * Uses device manufacturer and model detection for better accuracy
      */
     private fun hasFaceRecognition(): Boolean {
-        // Face recognition is typically available on devices with BIOMETRIC_WEAK support
-        // This is a heuristic as Android doesn't provide direct API to query specific types
-        return biometricManager?.canAuthenticate(BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS
+        val canAuthenticateWeak = biometricManager?.canAuthenticate(BIOMETRIC_WEAK)
+        val canAuthenticateStrong = biometricManager?.canAuthenticate(BIOMETRIC_STRONG)
+
+        if (canAuthenticateWeak != BiometricManager.BIOMETRIC_SUCCESS) {
+            return false
+        }
+
+        val manufacturer = Build.MANUFACTURER.lowercase()
+        val model = Build.MODEL.lowercase()
+
+        // Check for known face unlock devices
+        return when {
+            manufacturer.contains("google") && model.contains("pixel 4") -> true
+            manufacturer.contains("samsung") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> true
+            // If weak biometrics work but not strong, likely face unlock
+            canAuthenticateWeak == BiometricManager.BIOMETRIC_SUCCESS &&
+                canAuthenticateStrong != BiometricManager.BIOMETRIC_SUCCESS -> true
+            else -> false
+        }
     }
 
     /**
      * Helper: Check if iris recognition is available
+     * Only available on specific Samsung devices
      */
     private fun hasIrisRecognition(): Boolean {
-        // Iris is less common, typically on Samsung devices
-        // Similar to face, we check for biometric capability
-        return biometricManager?.canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
+        val manufacturer = Build.MANUFACTURER.lowercase()
+        val model = Build.MODEL.lowercase()
+
+        // Iris scanner only on Samsung Galaxy S8/S9/Note 8/Note 9
+        return manufacturer.contains("samsung") && (
+            model.contains("sm-g950") ||
+            model.contains("sm-g955") ||
+            model.contains("sm-g960") ||
+            model.contains("sm-g965") ||
+            model.contains("sm-n950") ||
+            model.contains("sm-n960")
+        ) && biometricManager?.canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
     }
 
     /**

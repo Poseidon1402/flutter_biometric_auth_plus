@@ -1,16 +1,41 @@
 # flutter_biometric_auth_plus_example
 
-Demonstrates how to use the flutter_biometric_auth_plus plugin.
+Demonstrates how to use the flutter_biometric_auth_plus plugin for advanced biometric authentication on Android.
 
-## Getting Started
+## Features Demonstrated
 
-This project is a starting point for a Flutter application.
+- ✅ Real-time device capability detection
+- ✅ Display of available biometric types (fingerprint, face, iris)
+- ✅ Three authentication modes:
+  - Strong biometric only (Class 3)
+  - Weak biometric (Class 2)
+  - Biometric with device credential fallback
+- ✅ Beautiful Material Design 3 UI
+- ✅ Dark mode support
+- ✅ Animated feedback for authentication results
+- ✅ Comprehensive error handling
 
-A few resources to get you started if this is your first Flutter project:
+## Running the Example
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```bash
+cd example
+flutter pub get
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Requirements
+
+- Android device or emulator with:
+  - Biometric hardware (fingerprint sensor, face unlock, etc.)
+  - Enrolled biometrics or device credentials
+  - Android 7.0 (API 24) or higher
+
+## Screenshots
+
+The example app shows:
+1. Device capabilities card
+2. Available biometric types
+3. Three authentication method buttons
+4. Real-time authentication results
+
+For more information, see the [main plugin documentation](https://pub.dev/packages/flutter_biometric_auth_plus).

@@ -1,31 +1,54 @@
-# Flutter Biometric Auth Plus 🔐
+# flutter_biometric_auth_plus
 
-Advanced Android biometric authentication plugin for Flutter, providing comprehensive support for modern Android security features.
+[![pub package](https://img.shields.io/pub/v/flutter_biometric_auth_plus.svg)](https://pub.dev/packages/flutter_biometric_auth_plus)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+Advanced biometric authentication plugin for Flutter with comprehensive Android support including fingerprint, face recognition, iris scanning, and device credentials.
 
-### 🎯 Complete Biometric Support
-- **Fingerprint Recognition** - Universal biometric authentication
-- **Face Recognition** - Both 2D and 3D face unlock (device-dependent)
-- **Iris Recognition** - Advanced biometric security (Samsung and select devices)
-- **Device Credentials** - PIN, Pattern, and Password fallback
+## 🎥 Demo
 
-### 🔒 Security Levels
-- **Strong Biometrics (Class 3)** - Fingerprint, 3D Face, Iris
-  - Suitable for cryptographic operations
-  - Highest security level
-- **Weak Biometrics (Class 2)** - 2D Face unlock
-  - Convenience-focused authentication
-  - Lower security threshold
-- **Device Credential Fallback** - Seamless fallback to PIN/Pattern/Password
+https://github.com/user-attachments/assets/your-video-id-here
 
-### 📱 Modern Android API
-- Built on **BiometricPrompt API** (Android 10+)
-- Minimum SDK: Android 7.0 (API 24)
-- Target SDK: Android 14+ (API 36)
-- Full compatibility with modern Android devices
+> **Note:** Replace the URL above with your actual demo video URL from GitHub or YouTube
 
-## Installation
+## ✨ Features
+
+- 🔐 **Complete Biometric Support**
+  - Fingerprint recognition
+  - Face recognition (2D and 3D)
+  - Iris recognition (Samsung devices)
+  - Device credentials (PIN, Pattern, Password)
+
+- 💪 **Security Levels**
+  - Strong biometrics (Class 3) - Fingerprint, 3D Face, Iris
+  - Weak biometrics (Class 2) - 2D Face unlock
+  - Device credential fallback support
+
+- 🎯 **Modern Android API**
+  - Built on BiometricPrompt API (Android 10+)
+  - Backward compatible to Android 7.0 (API 24)
+  - Full AndroidX Biometric library integration
+
+- 📊 **Comprehensive Capabilities**
+  - Hardware detection
+  - Enrollment status checking
+  - Detailed error handling (15+ error codes)
+  - Authentication cancellation
+  - Real-time capability information
+
+## 📱 Platform Support
+
+| Platform | Support |
+|----------|---------|
+| Android  | ✅      |
+| iOS      | ❌ (Coming soon) |
+
+**Android Requirements:**
+- Minimum SDK: 24 (Android 7.0)
+- Compile SDK: 34+
+- Target SDK: 34+
+
+## 🚀 Installation
 
 Add this to your package's `pubspec.yaml` file:
 
@@ -34,214 +57,177 @@ dependencies:
   flutter_biometric_auth_plus: ^1.0.0
 ```
 
-## Usage
+Then run:
 
-### Import the package
+```bash
+flutter pub get
+```
+
+## 📖 Usage
+
+### Import
 
 ```dart
 import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
 ```
 
-### Check Device Capabilities
+### Quick Start
 
 ```dart
 final biometricAuth = FlutterBiometricAuthPlus();
 
-// Check if device has biometric hardware
-bool canCheckBiometrics = await biometricAuth.canCheckBiometrics();
+// Check if biometrics are available
+bool canAuthenticate = await biometricAuth.canAuthenticateWithBiometricsStrong();
 
-// Check if biometrics are enrolled
-bool hasEnrolledBiometrics = await biometricAuth.hasEnrolledBiometrics();
-
-// Check for strong biometric support (Class 3)
-bool canUseStrong = await biometricAuth.canAuthenticateWithBiometricsStrong();
-
-// Check for weak biometric support (Class 2)
-bool canUseWeak = await biometricAuth.canAuthenticateWithBiometricsWeak();
-
-// Check if device credential is set
-bool hasDeviceCredential = await biometricAuth.canAuthenticateWithDeviceCredential();
-```
-
-### Get Available Biometric Types
-
-```dart
-List<String> availableBiometrics = await biometricAuth.getAvailableBiometrics();
-// Returns: ['fingerprint', 'face', 'iris'] based on device capabilities
-```
-
-### Get Comprehensive Biometric Information
-
-```dart
-Map<String, dynamic> info = await biometricAuth.getBiometricInfo();
-print('Has hardware: ${info['hasHardware']}');
-print('Enrolled biometrics: ${info['hasEnrolledBiometrics']}');
-print('Available types: ${info['availableBiometricTypes']}');
-print('Android version: ${info['androidVersion']}');
-```
-
-### Authenticate with Strong Biometrics Only
-
-```dart
-try {
+if (canAuthenticate) {
+  // Authenticate
   final result = await biometricAuth.authenticate(
-    title: 'Authenticate',
+    title: 'Biometric Authentication',
     subtitle: 'Verify your identity',
-    description: 'Place your finger on the sensor',
     negativeButtonText: 'Cancel',
-    confirmationRequired: false,
-    allowDeviceCredential: false,
-    biometricStrength: 'strong', // 'strong', 'weak', or 'any'
   );
 
   final authResult = BiometricAuthResult.fromMap(result);
   
   if (authResult.success) {
     print('✅ Authentication successful!');
-    print('Method: ${authResult.authenticationMethod.name}');
   } else {
     print('❌ Authentication failed: ${authResult.errorMessage}');
   }
-} catch (e) {
-  print('Error: $e');
 }
 ```
 
-### Authenticate with Device Credential Fallback
+### Check Device Capabilities
+
+```dart
+// Check hardware availability
+bool hasHardware = await biometricAuth.canCheckBiometrics();
+
+// Check enrolled biometrics
+bool hasEnrolled = await biometricAuth.hasEnrolledBiometrics();
+
+// Get available biometric types
+List<String> types = await biometricAuth.getAvailableBiometrics();
+// Returns: ['fingerprint', 'face', 'iris']
+
+// Get comprehensive information
+Map<String, dynamic> info = await biometricAuth.getBiometricInfo();
+print('Hardware: ${info['hasHardware']}');
+print('Enrolled: ${info['hasEnrolledBiometrics']}');
+print('Types: ${info['availableBiometricTypes']}');
+```
+
+### Authentication Options
+
+#### Strong Biometric Only (Recommended for high security)
 
 ```dart
 final result = await biometricAuth.authenticate(
-  title: 'Secure Login',
-  subtitle: 'Use biometrics or PIN',
-  description: 'Authenticate to access secure content',
-  allowDeviceCredential: true, // Enable PIN/Pattern/Password fallback
+  title: 'Secure Payment',
+  subtitle: 'Confirm transaction',
+  biometricStrength: 'strong', // Fingerprint, 3D Face, Iris
+  confirmationRequired: true,  // Explicit confirmation
+);
+```
+
+#### With Device Credential Fallback
+
+```dart
+final result = await biometricAuth.authenticate(
+  title: 'Login',
+  subtitle: 'Verify your identity',
+  allowDeviceCredential: true, // Allow PIN/Pattern/Password
   biometricStrength: 'strong',
 );
 
 final authResult = BiometricAuthResult.fromMap(result);
-
 if (authResult.success) {
   if (authResult.usedDeviceCredential) {
-    print('Authenticated with device credential');
+    print('Authenticated with PIN/Pattern/Password');
   } else {
     print('Authenticated with biometric');
   }
 }
 ```
 
-### Cancel Authentication
+#### Weak Biometric (Convenience mode)
 
 ```dart
-await biometricAuth.cancelAuthentication();
+final result = await biometricAuth.authenticate(
+  title: 'Quick Unlock',
+  biometricStrength: 'weak', // Accepts 2D face unlock
+);
 ```
 
-## API Reference
-
-### Main Methods
-
-#### `canCheckBiometrics()`
-Returns `Future<bool>` - Check if device has biometric hardware.
-
-#### `getAvailableBiometrics()`
-Returns `Future<List<String>>` - List of available biometric types: `['fingerprint', 'face', 'iris']`.
-
-#### `hasEnrolledBiometrics()`
-Returns `Future<bool>` - Check if user has enrolled at least one biometric.
-
-#### `canAuthenticateWithBiometricsStrong()`
-Returns `Future<bool>` - Check if strong biometric (Class 3) authentication is available.
-
-#### `canAuthenticateWithBiometricsWeak()`
-Returns `Future<bool>` - Check if weak biometric (Class 2) authentication is available.
-
-#### `canAuthenticateWithDeviceCredential()`
-Returns `Future<bool>` - Check if device credential (PIN/Pattern/Password) is set.
-
-#### `authenticate({...})`
-Perform biometric authentication with customizable options.
-
-**Parameters:**
-- `title` (required) - Dialog title
-- `subtitle` (optional) - Dialog subtitle
-- `description` (optional) - Additional description/instructions
-- `negativeButtonText` - Cancel button text (default: "Cancel")
-- `confirmationRequired` - Require explicit user confirmation (default: false)
-- `allowDeviceCredential` - Allow PIN/Pattern/Password fallback (default: false)
-- `biometricStrength` - Required strength: 'strong', 'weak', or 'any' (default: 'strong')
-
-**Returns:** `Future<Map<String, dynamic>>` with authentication result.
-
-#### `getBiometricInfo()`
-Returns `Future<Map<String, dynamic>>` - Comprehensive biometric capability information.
-
-#### `cancelAuthentication()`
-Returns `Future<void>` - Cancel current authentication dialog.
-
-## Models
-
-### BiometricAuthResult
-
-Result object returned after authentication:
+### Error Handling
 
 ```dart
-class BiometricAuthResult {
-  final bool success;                    // Authentication success status
-  final String? errorCode;               // Error code if failed
-  final String? errorMessage;            // Human-readable error message
-  final String? biometricType;           // Type of biometric used
-  final bool usedDeviceCredential;       // Whether device credential was used
-  final AuthenticationMethod authenticationMethod; // Method used
+try {
+  final result = await biometricAuth.authenticate(
+    title: 'Authenticate',
+  );
+  
+  final authResult = BiometricAuthResult.fromMap(result);
+  
+  if (authResult.success) {
+    // Success
+    navigateToSecureScreen();
+  } else {
+    // Handle specific errors
+    switch (authResult.errorCode) {
+      case 'NO_BIOMETRICS':
+        showMessage('Please enroll biometrics in Settings');
+        break;
+      case 'LOCKOUT':
+        showMessage('Too many attempts. Try again in 30 seconds');
+        break;
+      case 'USER_CANCELED':
+        // User canceled, no action needed
+        break;
+      default:
+        showMessage('Authentication failed: ${authResult.errorMessage}');
+    }
+  }
+} on PlatformException catch (e) {
+  showMessage('Error: ${e.message}');
 }
 ```
 
-### BiometricType
+### Using the Reusable Widget
 
-Available biometric types:
-- `fingerprint` - Fingerprint sensor
-- `face` - Face recognition
-- `iris` - Iris scanner
-- `unknown` - Unknown/unsupported type
+```dart
+import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
 
-### BiometricStrength
+BiometricAuthButton(
+  dialogTitle: 'Login Required',
+  dialogSubtitle: 'Verify your identity',
+  allowDeviceCredential: true,
+  onAuthSuccess: () {
+    // Navigate to home
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  },
+  onAuthFailure: (error) {
+    // Show error
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(error)),
+    );
+  },
+)
+```
 
-Authentication strength levels:
-- `strong` - Class 3 biometrics (Fingerprint, 3D Face, Iris)
-- `weak` - Class 2 biometrics (2D Face unlock)
-- `any` - Accept any available biometric
+## 🔧 Android Configuration
 
-### AuthenticationMethod
+### Minimum Setup
 
-Authentication method used:
-- `biometric` - Biometric authentication
-- `deviceCredential` - PIN/Pattern/Password
-- `unknown` - Unknown method
-
-## Error Codes
-
-Common error codes returned during authentication:
-
-- `CANCELED` - Authentication was canceled
-- `USER_CANCELED` - User explicitly canceled
-- `NEGATIVE_BUTTON` - User tapped the negative button
-- `TIMEOUT` - Authentication timed out
-- `LOCKOUT` - Too many failed attempts (temporary lockout)
-- `LOCKOUT_PERMANENT` - Biometric authentication disabled due to too many attempts
-- `NO_BIOMETRICS` - No biometrics enrolled
-- `HW_NOT_PRESENT` - No biometric hardware
-- `HW_UNAVAILABLE` - Biometric hardware unavailable
-- `NO_DEVICE_CREDENTIAL` - No device credential set
-- `BIOMETRIC_UNAVAILABLE` - Biometric authentication not available
-
-## Android Configuration
-
-### Minimum Requirements
-
-Add to your `android/app/build.gradle`:
+Add to `android/app/build.gradle`:
 
 ```gradle
 android {
     defaultConfig {
-        minSdkVersion 24  // Android 7.0 (Nougat)
+        minSdkVersion 24  // Required
         targetSdkVersion 34
     }
 }
@@ -257,125 +243,239 @@ The following permissions are automatically added:
 <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 ```
 
-## Best Practices
+### MainActivity Configuration
 
-### 1. Always Check Capabilities First
+**Important:** Your `MainActivity` must extend `FlutterFragmentActivity`:
+
+```kotlin
+import io.flutter.embedding.android.FlutterFragmentActivity
+
+class MainActivity : FlutterFragmentActivity()
+```
+
+## 📚 API Reference
+
+### Main Methods
+
+| Method | Return Type | Description |
+|--------|-------------|-------------|
+| `canCheckBiometrics()` | `Future<bool>` | Check if device has biometric hardware |
+| `getAvailableBiometrics()` | `Future<List<String>>` | Get list of available biometric types |
+| `hasEnrolledBiometrics()` | `Future<bool>` | Check if user has enrolled biometrics |
+| `canAuthenticateWithBiometricsStrong()` | `Future<bool>` | Check strong biometric support (Class 3) |
+| `canAuthenticateWithBiometricsWeak()` | `Future<bool>` | Check weak biometric support (Class 2) |
+| `canAuthenticateWithDeviceCredential()` | `Future<bool>` | Check if PIN/Pattern/Password is set |
+| `authenticate()` | `Future<Map<String, dynamic>>` | Perform authentication |
+| `getBiometricInfo()` | `Future<Map<String, dynamic>>` | Get comprehensive device info |
+| `cancelAuthentication()` | `Future<void>` | Cancel current authentication |
+
+### Authentication Parameters
 
 ```dart
-if (await biometricAuth.canAuthenticateWithBiometricsStrong()) {
-  // Proceed with authentication
-} else {
-  // Show alternative authentication or error message
+authenticate({
+  required String title,              // Dialog title
+  String? subtitle,                   // Dialog subtitle (optional)
+  String? description,                // Dialog description (optional)
+  String negativeButtonText = 'Cancel', // Cancel button text
+  bool confirmationRequired = false,  // Require explicit confirmation
+  bool allowDeviceCredential = false, // Allow PIN/Pattern/Password
+  String biometricStrength = 'strong', // 'strong', 'weak', or 'any'
+})
+```
+
+### BiometricAuthResult
+
+```dart
+class BiometricAuthResult {
+  final bool success;                    // Authentication success
+  final String? errorCode;               // Error code if failed
+  final String? errorMessage;            // Human-readable error
+  final String? biometricType;           // Type used
+  final bool usedDeviceCredential;       // PIN/Pattern used?
+  final AuthenticationMethod authenticationMethod; // Method used
 }
 ```
 
-### 2. Provide Clear User Feedback
+### Common Error Codes
+
+| Error Code | Description | User Action |
+|------------|-------------|-------------|
+| `NO_BIOMETRICS` | No biometrics enrolled | Enroll in Settings |
+| `LOCKOUT` | Too many failed attempts | Wait 30 seconds |
+| `LOCKOUT_PERMANENT` | Biometric disabled | Use PIN/Pattern |
+| `USER_CANCELED` | User canceled | Try again |
+| `HW_NOT_PRESENT` | No biometric hardware | Use alternative auth |
+| `HW_UNAVAILABLE` | Hardware temporarily unavailable | Try again later |
+| `TIMEOUT` | Authentication timed out | Try again |
+
+## 🎯 Use Cases
+
+### 1. App Lock Screen
 
 ```dart
-final result = await biometricAuth.authenticate(
-  title: 'Login Required',
-  subtitle: 'Verify it\'s you',
-  description: 'Touch the fingerprint sensor to continue',
-);
-```
-
-### 3. Handle Errors Gracefully
-
-```dart
-final authResult = BiometricAuthResult.fromMap(result);
-
-if (!authResult.success) {
-  switch (authResult.errorCode) {
-    case 'NO_BIOMETRICS':
-      showMessage('Please enroll biometrics in device settings');
-      break;
-    case 'LOCKOUT':
-      showMessage('Too many attempts. Try again later');
-      break;
-    default:
-      showMessage('Authentication failed: ${authResult.errorMessage}');
+class AppLockScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: BiometricAuthButton(
+          dialogTitle: 'Unlock App',
+          allowDeviceCredential: true,
+          onAuthSuccess: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+          onAuthFailure: (error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(error)),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 ```
 
-### 4. Use Appropriate Security Levels
-
-- **High Security** (banking, payments): Use `biometricStrength: 'strong'`
-- **Convenience** (app unlock): Use `biometricStrength: 'weak'` or `'any'`
-- **Critical Operations**: Set `confirmationRequired: true`
-
-### 5. Implement Device Credential Fallback
+### 2. Payment Confirmation
 
 ```dart
-final result = await biometricAuth.authenticate(
-  title: 'Authenticate',
-  allowDeviceCredential: true, // Allow PIN/Pattern as backup
-  biometricStrength: 'strong',
-);
+Future<bool> confirmPayment(double amount) async {
+  final auth = FlutterBiometricAuthPlus();
+  
+  final result = await auth.authenticate(
+    title: 'Confirm Payment',
+    subtitle: '\$$amount',
+    description: 'Authenticate to complete transaction',
+    confirmationRequired: true,
+    biometricStrength: 'strong',
+  );
+  
+  return BiometricAuthResult.fromMap(result).success;
+}
 ```
 
-## Example App
+### 3. Secure Settings Access
 
-The example app demonstrates:
-- ✅ Complete device capability checking
-- ✅ All available biometric types display
-- ✅ Strong vs Weak biometric authentication
-- ✅ Device credential fallback
-- ✅ Beautiful Material Design 3 UI
-- ✅ Comprehensive error handling
-- ✅ Real-time authentication status
-
-Run the example:
-```bash
-cd example
-flutter run
+```dart
+Future<void> openSecureSettings() async {
+  final auth = FlutterBiometricAuthPlus();
+  
+  final result = await auth.authenticate(
+    title: 'Access Secure Settings',
+    subtitle: 'Authentication required',
+  );
+  
+  if (BiometricAuthResult.fromMap(result).success) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SecureSettingsPage()),
+    );
+  }
+}
 ```
 
-## Compatibility
+## 🔒 Security Best Practices
 
-### Android Versions
-- ✅ Android 7.0 (API 24) - Android 14+ (API 36)
-- ✅ Full BiometricPrompt API support (Android 10+)
-- ✅ Backward compatibility for older devices
+1. **Use Strong Biometrics for Sensitive Operations**
+   ```dart
+   biometricStrength: 'strong' // For payments, sensitive data
+   ```
 
-### Device Support
-- ✅ All devices with fingerprint sensors
-- ✅ Devices with face unlock (2D and 3D)
-- ✅ Samsung devices with iris scanners
-- ✅ Devices with only PIN/Pattern/Password
+2. **Require Confirmation for Critical Actions**
+   ```dart
+   confirmationRequired: true // For transactions
+   ```
 
-## Comparison with Other Plugins
+3. **Implement Server-Side Validation**
+   - Don't rely solely on client-side authentication
+   - Use authentication result to obtain server session token
+
+4. **Handle All Error Cases**
+   - Provide clear user feedback
+   - Offer alternative authentication methods
+
+5. **Use Device Credential Fallback**
+   ```dart
+   allowDeviceCredential: true // Better UX
+   ```
+
+## 🐛 Troubleshooting
+
+### "Plugin requires a foreground activity" Error
+
+**Solution:** Ensure `MainActivity` extends `FlutterFragmentActivity`:
+
+```kotlin
+import io.flutter.embedding.android.FlutterFragmentActivity
+
+class MainActivity : FlutterFragmentActivity()
+```
+
+### Biometric Dialog Not Showing
+
+**Checklist:**
+- ✅ Device has biometric hardware
+- ✅ User has enrolled biometrics in Settings
+- ✅ App has proper permissions
+- ✅ MainActivity extends FlutterFragmentActivity
+- ✅ minSdkVersion is 24 or higher
+
+### Face Recognition Not Working
+
+Face recognition detection is based on device manufacturer and model. If your device has face unlock but it's not detected, please file an issue with your device details.
+
+## 📊 Comparison with Other Plugins
 
 | Feature | flutter_biometric_auth_plus | local_auth | Other plugins |
 |---------|---------------------------|------------|---------------|
-| BiometricPrompt API | ✅ Full support | ⚠️ Partial | ❌ Limited |
+| BiometricPrompt API | ✅ Full support | ⚠️ Partial | ❌ Old API |
 | Strong/Weak Biometrics | ✅ Yes | ❌ No | ❌ No |
-| Device Credential Fallback | ✅ Seamless | ⚠️ Basic | ⚠️ Basic |
-| Face Recognition | ✅ Yes | ⚠️ Limited | ⚠️ Limited |
+| Face Recognition | ✅ Full support | ⚠️ Limited | ⚠️ Limited |
 | Iris Recognition | ✅ Yes | ❌ No | ❌ No |
-| Detailed Capabilities | ✅ Comprehensive | ⚠️ Basic | ❌ Limited |
-| Error Handling | ✅ Detailed | ⚠️ Basic | ⚠️ Basic |
-| Modern Android API | ✅ Yes | ⚠️ Partial | ❌ No |
+| Device Credential Fallback | ✅ Seamless | ⚠️ Basic | ⚠️ Basic |
+| Detailed Error Codes | ✅ 15+ codes | ⚠️ Basic | ❌ Limited |
+| Reusable Widget | ✅ Yes | ❌ No | ❌ No |
+| Android 14 Support | ✅ Yes | ⚠️ Partial | ❌ Unknown |
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+### Steps to Contribute
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Author
+## 📝 Changelog
 
-Created with ❤️ for the Flutter community
+See [CHANGELOG.md](CHANGELOG.md) for a list of changes.
 
-## Support
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with Flutter and AndroidX Biometric library
+- Inspired by the need for comprehensive biometric authentication
+- Thanks to all contributors and users
+
+## 📧 Support
+
+- **Issues:** [GitHub Issues](https://github.com/yourusername/flutter_biometric_auth_plus/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/yourusername/flutter_biometric_auth_plus/discussions)
+- **Email:** your-email@example.com
+
+## ⭐ Show Your Support
 
 If you find this plugin helpful, please give it a ⭐ on GitHub!
 
-For bugs and feature requests, please create an issue on GitHub.
-
 ---
 
-**Note:** This plugin currently supports Android only. iOS support may be added in future versions.
-
+**Made with ❤️ for the Flutter community**
