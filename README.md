@@ -7,7 +7,7 @@ Advanced biometric authentication plugin for Flutter with comprehensive Android 
 
 ## 🎥 Demo
 
-![Demo](`assets/demo.gif`)
+![Demo](assets/demo.gif)
 
 ## ✨ Features
 
