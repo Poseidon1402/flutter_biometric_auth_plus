@@ -468,9 +468,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Support
 
-- **Issues:** [GitHub Issues](https://github.com/yourusername/flutter_biometric_auth_plus/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/flutter_biometric_auth_plus/discussions)
-- **Email:** your-email@example.com
+- **Issues:** [GitHub Issues](https://github.com/Poseidon1402/flutter_biometric_auth_plus/issues)
+- **Email:** rjls.tiavina@gmail.com
 
 ## ⭐ Show Your Support
 
