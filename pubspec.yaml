@@ -12,10 +12,6 @@ topics:
   - face-recognition
   - security
 
-screenshots:
-  - description: 'Biometric authentication example'
-    path: screenshots/demo.png
-
 environment:
   sdk: ^3.9.2
   flutter: '>=3.3.0'
