@@ -1,6 +1,6 @@
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 
 void main() {
   runApp(const MyApp());

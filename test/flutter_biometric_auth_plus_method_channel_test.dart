@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus_method_channel.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelFlutterBiometricAuthPlus platform = MethodChannelFlutterBiometricAuthPlus();
-  const MethodChannel channel = MethodChannel('flutter_biometric_auth_plus');
+  MethodChannelBiometricAuthAdvanced platform = MethodChannelBiometricAuthAdvanced();
+  const MethodChannel channel = MethodChannel('biometric_auth_advanced');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(

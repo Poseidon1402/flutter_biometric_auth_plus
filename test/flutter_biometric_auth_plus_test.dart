@@ -1,29 +1,29 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus_platform_interface.dart';
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus_method_channel.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced_platform_interface.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockFlutterBiometricAuthPlusPlatform
+class MockBiometricAuthAdvancedPlatform
     with MockPlatformInterfaceMixin
-    implements FlutterBiometricAuthPlusPlatform {
+    implements BiometricAuthAdvancedPlatform {
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 }
 
 void main() {
-  final FlutterBiometricAuthPlusPlatform initialPlatform = FlutterBiometricAuthPlusPlatform.instance;
+  final BiometricAuthAdvancedPlatform initialPlatform = BiometricAuthAdvancedPlatform.instance;
 
-  test('$MethodChannelFlutterBiometricAuthPlus is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelFlutterBiometricAuthPlus>());
+  test('$MethodChannelBiometricAuthAdvanced is the default instance', () {
+    expect(initialPlatform, isInstanceOf<MethodChannelBiometricAuthAdvanced>());
   });
 
   test('getPlatformVersion', () async {
-    FlutterBiometricAuthPlus flutterBiometricAuthPlusPlugin = FlutterBiometricAuthPlus();
-    MockFlutterBiometricAuthPlusPlatform fakePlatform = MockFlutterBiometricAuthPlusPlatform();
-    FlutterBiometricAuthPlusPlatform.instance = fakePlatform;
+    BiometricAuthAdvanced biometricAuthAdvancedPlugin = BiometricAuthAdvanced();
+    MockBiometricAuthAdvancedPlatform fakePlatform = MockBiometricAuthAdvancedPlatform();
+    BiometricAuthAdvancedPlatform.instance = fakePlatform;
 
-    expect(await flutterBiometricAuthPlusPlugin.getPlatformVersion(), '42');
+    expect(await biometricAuthAdvancedPlugin.getPlatformVersion(), '42');
   });
 }

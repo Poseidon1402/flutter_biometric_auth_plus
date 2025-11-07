@@ -9,14 +9,13 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-
-import 'package:flutter_biometric_auth_plus/flutter_biometric_auth_plus.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final FlutterBiometricAuthPlus plugin = FlutterBiometricAuthPlus();
+    final BiometricAuthAdvanced plugin = BiometricAuthAdvanced();
     final String? version = await plugin.getPlatformVersion();
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.

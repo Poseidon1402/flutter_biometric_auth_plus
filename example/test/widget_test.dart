@@ -5,10 +5,11 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:biometric_auth_advanced_example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_biometric_auth_plus_example/main.dart';
+import 'package:biometric_auth_advanced/biometric_auth_advanced.dart';
 
 void main() {
   testWidgets('Verify Platform version', (WidgetTester tester) async {
